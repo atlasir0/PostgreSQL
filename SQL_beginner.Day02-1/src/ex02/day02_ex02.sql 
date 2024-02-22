@@ -1,0 +1,9 @@
+SELECT COALESCE(name, '-') AS person_name, visit_date, COALESCE(pizzeria_name, '-')
+FROM person
+FULL JOIN (select person_id, pizzeria_id, visit_date
+    FROM person_visits
+    WHERE visit_date BETWEEN '2022-01-01' AND '2022-01-03') as pv
+    ON person_id = person.id
+FULL JOIN (SELECT name AS pizzeria_name, id
+    FROM pizzeria) AS pizzeria ON pizzeria_id = pizzeria.id
+ORDER BY person_name, visit_date, pizzeria_name;

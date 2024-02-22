@@ -1,0 +1,5 @@
+SELECT n3.name AS person_name1, n2.name AS person_name2, n3.address AS common_address
+FROM person n3
+JOIN person n2 ON n3.address = n2.address AND n3.id > n2.id
+ORDER BY person_name1, person_name2, common_address;
+

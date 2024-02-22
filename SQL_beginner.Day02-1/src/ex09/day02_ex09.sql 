@@ -1,0 +1,25 @@
+WITH women AS (
+    SELECT name, id
+    FROM person
+    WHERE gender = 'female'
+),
+pepperoni_orders AS (
+    SELECT DISTINCT person_id
+    FROM person_order
+    WHERE menu_id IN (SELECT id FROM menu WHERE pizza_name = 'pepperoni pizza')
+),
+cheese_orders AS (
+    SELECT DISTINCT person_id
+    FROM person_order
+    WHERE menu_id IN (SELECT id FROM menu WHERE pizza_name = 'cheese pizza')
+)
+SELECT DISTINCT women.name
+FROM women
+WHERE women.id IN (
+    SELECT person_id
+    FROM pepperoni_orders
+    INTERSECT
+    SELECT person_id
+    FROM cheese_orders
+)
+ORDER BY women.name;

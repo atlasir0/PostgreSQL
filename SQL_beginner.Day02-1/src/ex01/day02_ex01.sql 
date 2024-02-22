@@ -1,0 +1,16 @@
+
+WITH date_range AS (
+    SELECT generate_series('2022-01-01'::date, '2022-01-10'::date, interval '1 day') AS date
+)
+SELECT DATE(date) AS missing_date
+FROM date_range
+WHERE DATE(date) NOT IN (
+    SELECT visit_date::date
+    FROM person_visits
+    WHERE person_id = 1 OR person_id = 2
+)
+ORDER BY missing_date;
+
+
+
+
